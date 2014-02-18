@@ -40,8 +40,18 @@ function post(request, response) {
 	// var newSessionId = login.login('xxx', 'xxx@gmail.com');
 	// TODO: set new session id to the 'session_id' cookie in the response
 	// replace "Logged In" response with response.end(login.hello(newSessionId));
-
-	response.end("Logged In\n");
+	// var cookies = request.cookies;
+	//Object.cookie = "session_id=99999";
+	//var cookies = request.cookies;
+	//var sid = cookies['name'];
+	//var name =  request.body.name;
+	var name = request.body.name !== undefined ? request.body.name : "No name given";
+	//var email = request.body.email;
+	var email = request.body.email !== undefined ? request.body.email : "email@empty";
+	var newSessionId = login.login(name, email);
+	response.setHeader('Set-Cookie', 'session_id=' + newSessionId);
+	response.end(login.hello(newSessionId));
+	//response.end("Logged In "+session_id+"\n")
 };
 
 function del(request, response) {
