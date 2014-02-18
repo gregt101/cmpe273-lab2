@@ -56,13 +56,13 @@ Login.prototype.reset = function(sessionId) {
         var _name = this.sessionMap[sessionId].name;
         var _email = this.sessionMap[sessionId].email;
         var newSessionId = new Date().getTime();
-        console.log('logout::' + sessionId);
+        //console.log('logout::' + sessionId);
         //delete this.sessionMap[sessionId];
-        //this.logout(sessionId);
+        this.logout(sessionId);
         this.sessionMap[newSessionId] = { name: _name, email: _email }
         console.log('new session id ' + newSessionId + ' for login::' + _email);
         //response.end("Rest \n");
-        this.logout(sessionId);
+        //this.logout(sessionId);
         return newSessionId;
 };
 
