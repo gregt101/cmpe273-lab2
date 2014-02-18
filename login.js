@@ -53,16 +53,14 @@ Login.prototype.logout = function(sessionId) {
 };
 
 Login.prototype.reset = function(sessionId) {
+        var _name = this.sessionMap[sessionId].name;
+        var _email = this.sessionMap[sessionId].email;
+	var newsessionId = new Date().getTime();
+	this.sessionMap[newsessionId] = { name: _name, email: _email } 
 	console.log('logout::' + sessionId);
-	//document.cookie = sessionId+ '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-	//this.sessionMap.remove[sessionId];
- 	//this.sessionMap.clear();
-	//this.sessionMap[sessionId] = { name: undefined, email: undefined }
-        //sessionId = undefined;
-        //var nameOut = this.sessionMap[sessionId].name;
-        delete this.sessionMap[sessionId];
-        //response.end(nameOut+' logged out\n');
-        //return sessionId;
+	console.log('new session id ' + newsessionId + ' for login::' + _email);
+	delete this.sessionMap[sessionId];
+        return newsessionId;
 };
 
 // Export the Login class
