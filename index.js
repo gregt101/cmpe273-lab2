@@ -48,9 +48,9 @@ function post(request, response) {
 	var name = request.body.name !== undefined ? request.body.name : "No name given";
 	// var email = request.body.email;
 	var email = request.body.email !== undefined ? request.body.email : "email@empty";
-	var newSessionId = login.login(name, email);
-	response.setHeader('Set-Cookie', 'session_id=' + newSessionId);
-	response.end(login.hello(newSessionId));
+	var  SessionId = login.login(name, email);
+	response.setHeader('Set-Cookie', 'session_id=' + SessionId);
+	response.end(login.hello(SessionId));
 	// response.end("Logged In "+session_id+"\n")
 };
 
@@ -68,7 +68,7 @@ function del(request, response) {
                         response.end("Invalid session_id! Already logged out\n");
                 }
         } else {
-                response.end("Please logout via HTTP DELETE\n");
+                response.end("Please supply the session_id\n");
         }
 
 };
@@ -76,8 +76,22 @@ function del(request, response) {
 function put(request, response) {
 	console.log("PUT:: Re-generate new seesion_id for the same user");
 	// TODO: refresh session id; similar to the post() function
-
-	response.end("Re-freshed session id\n");
+        var cookies = request.cookies;
+  	if ('session_id' in cookies) {
+        	var sid = cookies['session_id'];
+                if ( login.isLoggedIn(sid) ) {
+                        response.end("Re-freshed session id\n");
+                        var newSessionId = login.reset(sid);
+	                response.setHeader('Set-Cookie', 'session_id=' + newSessionId);
+	                response.end(login.hello(newSessionId));
+                        
+                } else {
+                        response.end("Invalid session_id! Not logged in\n");
+                }
+        } else {
+                response.end("Please supply the current session_id\n");
+        }
+	
 };
 
 app.listen(8000);
