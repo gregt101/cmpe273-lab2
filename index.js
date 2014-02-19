@@ -74,10 +74,10 @@ function put(request, response) {
                 var sid = cookies['session_id'];
                 if ( login.isLoggedIn(sid) ) {
                         console.log("PUT:: Re-generate new session_id for the same user");
-                        response.end("Re-freshed session id\n");
                         var _name = login.sessionMap[sid].name;
                         var _email = login.sessionMap[sid].email;
                         login.logout(sid);
+                        response.end("Re-freshed session id\n");
                         var newSessionId = login.login(_name, _email);
                         response.end(login.hello(newSessionId));
                         //var newSessionId = login.reset(sid);
