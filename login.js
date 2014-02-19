@@ -41,30 +41,18 @@ Login.prototype.login = function(_name, _email) {
  */
 Login.prototype.logout = function(sessionId) {
         console.log('logout::' + sessionId);
-        //document.cookie = sessionId+ '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-        //this.sessionMap.remove[sessionId];
-        //this.sessionMap.clear();
-        //this.sessionMap[sessionId] = { name: undefined, email: undefined }
-        //sessionId = undefined;
-        //var nameOut = this.sessionMap[sessionId].name;
         delete this.sessionMap[sessionId];
-        //return ' logged out\n';
-        //return sessionId;
 };
 
+/*
 Login.prototype.reset = function(sessionId) {
         var _name = this.sessionMap[sessionId].name;
         var _email = this.sessionMap[sessionId].email;
-        var newSessionId = new Date().getTime();
-        //console.log('logout::' + sessionId);
-        //delete this.sessionMap[sessionId];
         this.logout(sessionId);
-        this.sessionMap[newSessionId] = { name: _name, email: _email }
-        console.log('new session id ' + newSessionId + ' for login::' + _email);
-        //response.end("Rest \n");
-        //this.logout(sessionId);
-        return newSessionId;
+        this.login(_name,_email);
 };
+*/
 
 // Export the Login class
 module.exports = new Login();
+
