@@ -55,4 +55,3 @@ Login.prototype.reset = function(sessionId) {
 
 // Export the Login class
 module.exports = new Login();
-
