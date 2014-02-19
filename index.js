@@ -40,13 +40,9 @@ function post(request, response) {
         // var newSessionId = login.login('xxx', 'xxx@gmail.com');
         // TODO: set new session id to the 'session_id' cookie in the response
         // replace "Logged In" response with response.end(login.hello(newSessionId));
-        //
-        // var cookies = request.cookies;
-        // Object.cookie = "session_id=99999";
-        // var sid = cookies['name'];
-         var name =  request.body.name;
+        var name =  request.body.name;
         //var name = request.body.name !== undefined ? request.body.name : "Non name given";
-         var email = request.body.email;
+        var email = request.body.email;
         //var email = request.body.email !== undefined ? request.body.email : "email@empty";
         var newSessionId = login.login(name, email);
         response.setHeader('Set-Cookie', 'session_id=' + newSessionId);
@@ -72,16 +68,21 @@ function del(request, response) {
 };
 
 function put(request, response) {
-        console.log("PUT:: Re-generate new session_id for the same user");
         // TODO: refresh session id; similar to the post() function
         var cookies = request.cookies;
         if ('session_id' in cookies) {
                 var sid = cookies['session_id'];
                 if ( login.isLoggedIn(sid) ) {
+                        console.log("PUT:: Re-generate new session_id for the same user");
                         response.end("Re-freshed session id\n");
-                        var newSessionId = login.reset(sid);
-                        //response.end("New session_id is "+newSessionId+"\n");
+                        var _name = login.sessionMap[sid].name;
+                        var _email = login.sessionMap[sid].email;
+                        login.logout(sid);
+                        var newSessionId = login.login(_name, _email);
                         response.end(login.hello(newSessionId));
+                        //var newSessionId = login.reset(sid);
+                        //response.end("New session_id is "+newSessionId+"\n");
+                        //response.end(login.hello(newSessionId));
                    } else {
                         response.end("Invalid session_id! Not logged in\n");
                 }
@@ -94,4 +95,5 @@ function put(request, response) {
 app.listen(8000);
 
 console.log("Node.JS server running at 8000...");
+
 
