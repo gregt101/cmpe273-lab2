@@ -77,12 +77,10 @@ function put(request, response) {
                         var _name = login.sessionMap[sid].name;
                         var _email = login.sessionMap[sid].email;
                         login.logout(sid);
-                        //response.end("Re-freshed session id\n");
-                        var newSessionId = login.login(_name, _email);
-                        response.end(login.hello(newSessionId));
                         //var newSessionId = login.reset(sid);
-                        //response.end("New session_id is "+newSessionId+"\n");
-                        //response.end(login.hello(newSessionId));
+                        var newSessionId = login.login(_name, _email);
+                        response.setHeader('Set-Cookie', 'session_id=' + newSessionId);
+                        response.end(login.hello(newSessionId));
                    } else {
                         response.end("Invalid session_id! Not logged in\n");
                 }
