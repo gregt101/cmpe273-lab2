@@ -77,7 +77,7 @@ function put(request, response) {
                         var _name = login.sessionMap[sid].name;
                         var _email = login.sessionMap[sid].email;
                         login.logout(sid);
-                        response.end("Re-freshed session id\n");
+                        //response.end("Re-freshed session id\n");
                         var newSessionId = login.login(_name, _email);
                         response.end(login.hello(newSessionId));
                         //var newSessionId = login.reset(sid);
