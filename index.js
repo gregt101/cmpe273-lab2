@@ -57,7 +57,6 @@ function del(request, response) {
         if ('session_id' in cookies) {
                 var sid = cookies['session_id'];
                 if ( login.isLoggedIn(sid) ) {
-                        response.end('Logged out from the server\n');
                         response.end(login.logout(sid));
                 } else {
                         response.end("Invalid session_id! Already logged out\n");
@@ -76,8 +75,8 @@ function put(request, response) {
                         console.log("PUT:: Re-generate new session_id for the same user");
                         var _name = login.sessionMap[sid].name;
                         var _email = login.sessionMap[sid].email;
-                        login.logout(sid);
                         //var newSessionId = login.reset(sid);
+                        login.logout(sid);
                         var newSessionId = login.login(_name, _email);
                         response.setHeader('Set-Cookie', 'session_id=' + newSessionId);
                         response.end(login.hello(newSessionId));
